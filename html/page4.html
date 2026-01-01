@@ -1,0 +1,308 @@
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>职业规划</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --navy: #0f2547;
+            --gold: #d4af37;
+            --text-main: #2c3e50;
+            --text-sub: #7f8c8d;
+            --pillar-bg: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+            /* 更加现代的配色方案 */
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            /* 更改为更具科技感的蓝色 */
+            --gradient-accent: linear-gradient(135deg, #3498db 0%, #8e44ad 100%);
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --white: #ffffff;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+            /* 学术灰金配色方案 */
+            --slate-gray: #2C3E50;
+            /* 深灰蓝，代表学术严谨 */
+            --academic-gold: #B08D57;
+            /* 沉稳的哑光金 */
+            --light-gold: #E5D5B7;
+            --bg-neutral: #F4F4F2;
+            /* 浅米灰背景 */
+            --white: #ffffff;
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            background: radial-gradient(circle at top right, #ffffff, #f0f4f8);
+            font-family: "Inter", "system-ui", "PingFang SC", sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 60px;
+            scroll-behavior: smooth;
+            background: radial-gradient(circle at top right, #edf2f7, #f8fafc);
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        .section-content {
+            display: none;
+            width: 1168px;
+            height: 657px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 50px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            animation: slideUp 0.6s ease-out;
+            position: relative;
+        }
+
+        .main-title {
+            padding: 30px 0 0 30px;
+            color: var(--navy);
+            font-size: 40px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1.5;
+            animation: fadeInDown 0.8s ease-out;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .main-title span {
+            display: block;
+            font-size: 18px;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        /* 职业规划特有布局 */
+        .career-staircase {
+            display: flex;
+            align-items: flex-end;
+            /* 关键：底部对齐形成阶梯感 */
+            justify-content: center;
+            gap: 0;
+            /* 盒子紧贴 */
+            padding: 20px 10px;
+            margin-top: 0px;
+        }
+
+        .stair-item {
+            display: flex;
+            flex-direction: column;
+            width: 320px;
+            position: relative;
+        }
+
+        /* 阶段标题样式 */
+        .stair-label {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+
+        /* 阶梯盒子核心样式 */
+        .stair-box {
+            background: var(--white);
+            border: 3px solid var(--navy);
+            padding: 30px 20px;
+            min-height: 200px;
+            position: relative;
+            z-index: 2;
+            /* 模拟图片中的阶梯层叠阴影效果 */
+            box-shadow:
+                10px -10px 0px -3px var(--white),
+                10px -10px 0px 0px var(--gold);
+            border-color: var(--academic-gold);
+        }
+
+        /* 最后一个盒子不需要向右上的阴影，或者根据需要调整 */
+        .stair-item:last-child .stair-box {
+            box-shadow:
+                -10px 10px 0px -3px var(--white),
+                10px -10px 0px 0px var(--gold);
+            /* 保持一致的右上金边 */
+        }
+
+        /* 图标区域 */
+        .stair-icon {
+            font-size: 40px;
+            color: var(--navy);
+            margin-bottom: 20px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .icon-tag {
+            position: absolute;
+            top: 0;
+            right: 35%;
+            font-size: 10px;
+            font-weight: bold;
+            color: var(--navy);
+            border: 1px solid var(--navy);
+            padding: 1px 3px;
+            border-radius: 2px;
+        }
+
+        .experience-list {
+            background: transparent;
+            padding-left: 0px;
+            margin: 0;
+            border: none;
+            font-size: 15px;
+            color: var(--text-dark);
+            /* 使用CSS变量，这是很好的实践 */
+            list-style-type: none;
+            /* 移除列表默认的项目符号 */
+            line-height: 1.5;
+        }
+
+        /* 定义每个列表项的样式 */
+        .experience-item {
+            display: flex;
+            /* 使用Flexbox布局，使子元素水平排列 */
+            align-items: center;
+            /* 垂直居中对齐 */
+            margin-left: 10px;
+            margin-bottom: 8px;
+            /* 增加一些列表项之间的间距，可根据需要调整 */
+        }
+
+        /* 定义金色圆点的样式 */
+        .experience-bullet {
+            color: var(--academic-gold);
+            margin-right: 10px;
+            font-weight: bold;
+            /* 修正了原代码中的 font-size: bold; 错误 */
+            /* 你也可以使用伪元素 ::before 来创建圆点，这是另一种常见方法 */
+        }
+
+        /* 阶梯高度差控制 */
+        .stair-item:nth-child(1) {
+            margin-bottom: 0px;
+        }
+
+        .stair-item:nth-child(2) {
+            margin-bottom: 80px;
+        }
+
+        .stair-item:nth-child(3) {
+            margin-bottom: 160px;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <section class="section-content active">
+            <div class="main-title">
+                职业规划
+                <span>Career Planning</span>
+            </div>
+
+            <div class="career-staircase">
+                <div class="stair-item">
+                    <div class="stair-label">短期：融入与深耕</div>
+                    <div class="stair-box">
+                        <div class="stair-icon">
+                            <i class="fa-solid fa-pen-nib"></i>
+                        </div>
+                        <div class="experience-list">
+                            <ul class="experience-list">
+                                <li class="experience-item">
+                                    <span class="experience-bullet">•</span>
+                                    <span class="experience-content">迅速融入医院文化与工作流程。</span>
+                                </li>
+                                <li class="experience-item">
+                                    <span class="experience-bullet">•</span>
+                                    <span class="experience-content">高质量完成专培训练，系统性打打磨高难度手术技能。</span>
+                                </li>
+                                <li class="experience-item">
+                                    <span class="experience-bullet">•</span>
+                                    <span class="experience-content">目标：成为一名患者信赖、带组教授放心的临床骨干。</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stair-item">
+                    <div class="stair-label">中期：融合与创新</div>
+                    <div class="stair-box">
+                        <div class="stair-icon">
+                            <i class="fa-solid fa-chart-line"></i> <span class="icon-tag">NSFC</span>
+                        </div>
+                        <div class="experience-list">
+                            <ul class="experience-list">
+                                <li class="experience-item">
+                                    <span class="experience-bullet">•</span>
+                                    <span class="experience-content">积极申请国家自然科学基金项目。</span>
+                                </li>
+                                <li class="experience-item">
+                                    <span class="experience-bullet">•</span>
+                                    <span class="experience-content">发表高质量SCI论文，提升学术影响力。</span>
+                                </li>
+                                <li class="experience-item">
+                                    <span class="experience-bullet">•</span>
+                                    <span class="experience-content">目标：成为医院科研中坚力量。</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stair-item">
+                    <div class="stair-label">远期：引领与贡献</div>
+                    <div class="stair-box">
+                        <div class="stair-icon">
+                            <i class="fa-solid fas fa-chess-king"></i>
+                        </div>
+                        <div class="experience-list">
+                            <ul class="experience-list">
+                                <li class="experience-item">
+                                    <span class="experience-bullet">•</span>
+                                    <span class="experience-content">致力于成为一名“临床精湛、科研卓越”的复合型XX科专家。</span>
+                                </li>
+                                <li class="experience-item">
+                                    <span class="experience-bullet">•</span>
+                                    <span class="experience-content">积极参与学科建设，推动XX科领域的发展与创新。</span>
+                                </li>
+                                <li class="experience-item">
+                                    <span class="experience-bullet">•</span>
+                                    <span class="experience-content">目标：为医院的学术地位和全国影响力贡献力量。</span>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
