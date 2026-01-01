@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 辅助 PPT 制作指南</title>
+    <style>
+        :root {
+            /* 引用文档中的学术灰金配色方案 */
+            --slate-gray: #2C3E50;
+            /* 深灰蓝 */
+            --academic-gold: #B08D57;
+            /* 沉稳哑光金 */
+            --light-gold: #E5D5B7;
+            --bg-neutral: #F4F4F2;
+            /* 浅米灰背景 */
+            --white: #ffffff;
+            --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            background: radial-gradient(circle at top right, #ffffff, #f0f4f8);
+            font-family: "Inter", "system-ui", "PingFang SC", "Microsoft YaHei", sans-serif;
+            margin: 0;
+            color: var(--slate-gray);
+            line-height: 1.6;
+        }
+
+        /* 页面容器 */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--slate-gray);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--academic-gold);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 600;
+        }
+
+        /* 章节样式 */
+        section {
+            background: var(--white);
+            margin-bottom: 30px;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-smooth);
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            border-left: 5px solid var(--academic-gold);
+            padding-left: 15px;
+            color: var(--slate-gray);
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--academic-gold);
+            margin-top: 25px;
+        }
+
+        /* 强调提示框 */
+        .tips {
+            background-color: var(--bg-neutral);
+            border-right: 4px solid var(--academic-gold);
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        /* 路径展示 */
+        .path-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .path-card {
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 12px;
+            background: #fafafa;
+        }
+
+        .highlight-path {
+            border: 2px solid var(--academic-gold);
+            background: #fffdf9;
+        }
+
+        /* 代码块样式 */
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* 图片占位/样式 */
+        .image-box {
+            background: #eee;
+            margin: 20px 0;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            border: 1px dashed #ccc;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* 列表样式 */
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* 案例展示区域样式 */
+        .case-study-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .case-item {
+            border: 1px solid #eee;
+            padding: 25px;
+            border-radius: 12px;
+            background: #fff;
+        }
+
+        .case-header {
+            font-weight: 600;
+            color: var(--slate-gray);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .case-header::before {
+            content: "CASE";
+            font-size: 10px;
+            background: var(--academic-gold);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .compare-box {
+            text-align: center;
+        }
+
+        .compare-box p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .compare-box img {
+            width: 100%;
+            height: 200px;
+            /* 固定高度保持整齐，可根据实际图片调整 */
+            object-fit: cover;
+            border: 1px solid #ddd;
+            transition: transform 0.3s ease;
+        }
+
+        .compare-box img:hover {
+            transform: scale(1.02);
+        }
+
+        /* 响应式适配：手机端改为单列显示 */
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>AI 辅助 PPT 制作方案</h1>
+            <div class="subtitle">Gemini 3 + NotebookLM + HTML 精修</div>
+        </header>
+
+        <section id="overview">
+            <h2>概述</h2>
+            <p>使用 <strong>Gemini 3</strong> 等免费 AI 工具辅助能够轻松制作美观与设计感兼具的 PPT。</p>
+            <div class="tips">
+                <strong>Tips：</strong>如果能熟练掌握 HTML 语言，就能高效率制作好看的 PPT。
+            </div>
+        </section>
+
+        <section id="workflow">
+            <h2>整体流程</h2>
+            <p>以制作面试 PPT 为例：</p>
+
+            <h3>第一步：AI 制作 PPT 草稿</h3>
+            <ol>
+                <li>将 <strong>个人简历</strong> 投喂给 <strong>Gemini 3</strong>，明确岗位需求、PPT 时长及内容要求。</li>
+                <li>将演讲稿保存到 <strong>NotebookLM</strong>，通过对话补充细节。</li>
+                <li>使用 NotebookLM <strong>演示文稿功能</strong> 生成 PPT（注：仅支持 PDF 格式下载）。</li>
+            </ol>
+
+            <h3>第二步：AI 辅助制作精致 PPT</h3>
+            <div class="path-container">
+                <div class="path-card">
+                    <strong>路径 1：传统方式</strong>
+                    <p>参考 NotebookLM 的设计亮点，在 PowerPoint 中手动绘制。</p>
+                </div>
+                <div class="path-card highlight-path">
+                    <strong>路径 2：HTML 还原（推荐）</strong>
+                    <p>将设计截图投喂给 Gemini 3，使用 HTML 语言还原页面。网页比 PPT 更立体、交互更生动。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="case-study">
+            <h2>案例讲解</h2>
+            <h3>HTML 语句还原设计亮点</h3>
+            <p>将图片上传给 Gemini 3，限定页面格式并提供参考代码。以下是推荐的 CSS 变量设置：</p>
+            <pre>
+:root {
+    --slate-gray: #2C3E50;    /* 深灰蓝 */
+    --academic-gold: #B08D57; /* 沉稳的哑光金 */
+    --bg-neutral: #F4F4F2;    /* 浅米灰背景 */
+}
+        </pre>
+            <p>通过 VS Code 修改代码并实时在浏览器预览效果。</p>
+        </section>
+
+        <section id="conversion">
+            <h2>将网页转换为 PPT</h2>
+            <p>若必须使用 PPT 格式放映，可按以下步骤操作：</p>
+            <ul>
+                <li>将制作好的网页导出为 <strong>PDF</strong>。</li>
+                <li>将 PDF 转为 <strong>高清图片</strong>（如 300 dpi 的 PNG）。</li>
+                <li>将图片全屏插入到 Powerpoint 中。</li>
+            </ul>
+        </section>
+
+        <section id="results">
+            <h2>案例成果展示</h2>
+            <p>以下展示由 Gemini 3 亮点设计转换成 HTML-PPT 页面的实际案例：</p>
+
+            <div class="case-study-grid">
+                <div class="case-item">
+                    <div class="case-header">案例 1：设计亮点还原</div>
+                    <div class="comparison">
+                        <div class="compare-box">
+                            <p>Gemini 3 设计草图 (PDF)</p>
+                            <img src="./Gemini3/pdf1.png" alt="设计亮点 1">
+                        </div>
+                        <div class="compare-box">
+                            <p>最终 HTML 页面成品</p>
+                            <img src="./ppt/page1.png" alt="HTML 页面 1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="case-item">
+                    <div class="case-header">案例 2 & 3：多模块融合</div>
+                    <div class="comparison">
+                        <div class="compare-box">
+                            <p>NotebookLM 原始亮点1</p>
+                            <img src="./Gemini3/pdf2.png" alt="设计亮点 2">
+                        </div>
+                        <div class="compare-box">
+                            <p>NotebookLM 原始亮点2</p>
+                            <img src="./Gemini3/pdf3.png" alt="设计亮点 3">
+                        </div>
+                    </div>
+
+                    <div width=auto style="text-align: center;">
+                        <p>
+                            <br>
+                            <br>
+                            最终 HTML 页面成品
+                        </p>
+                        <img style="height: 100%; width: 100%;" src="./ppt/page2-3.png" alt="HTML 页面 2-3">
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="summary">
+            <h2>总结</h2>
+            <p><strong>理解 AI，善用 AI：</strong> 将大任务分解为 AI 擅长的小任务（如代码编写、排版设计），使用清晰、目的明确的语言进行沟通。</p>
+        </section>
+
+        <footer>
+            <p>基于 Gemini 3 技术文档生成</p>
+        </footer>
+    </div>
+
+</body>
+
+</html>
