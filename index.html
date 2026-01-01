@@ -272,25 +272,78 @@
         <section id="case-study">
             <h2>案例讲解</h2>
             <h3>HTML 语句还原设计亮点</h3>
-            <p>将图片上传给 Gemini 3，限定页面格式并提供参考代码。以下是案例部分 CSS 变量设置：</p>
+            <p>将图片上传给 Gemini 3，限定页面格式并提供参考代码。以下是案例部分 CSS 变量与格式设置：</p>
             <pre>
+/* 颜色变量设置 */
 :root {
-    --slate-gray: #2C3E50;    /* 深灰蓝 */
-    --academic-gold: #B08D57; /* 沉稳的哑光金 */
-    --bg-neutral: #F4F4F2;    /* 浅米灰背景 */
+    /* 学术灰金配色方案 */
+    --slate-gray: #2C3E50;
+    /* 深灰蓝，代表学术严谨 */
+     --academic-gold: #B08D57;
+    /* 沉稳的哑光金 */
+    --light-gold: #E5D5B7;
+    --bg-neutral: #F4F4F2;
+    /* 浅米灰背景 */
+    --white: #ffffff;
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+/* 全局背景与字体设置 */
+body {
+background: radial-gradient(circle at top right, #ffffff, #f0f4f8);
+font-family: "Inter", "system-ui", "PingFang SC", sans-serif;
+margin: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+overflow: hidden;
 }
+
+/* 主页面设置 */
+main {
+flex: 1;
+overflow-y: auto;
+padding: 60px;
+scroll-behavior: smooth;
+background: radial-gradient(circle at top right, #edf2f7, #f8fafc);
+}
+
+/* 类似 PPT 页面动画效果 */
+.section-content.active {
+display: block;
+}
+
+/* 单个内容模块样式，即类似 PPT 页面规格 */
+.section-content {
+display: none;
+width: 1168px;
+height: 657px;
+margin: 0 auto;
+background: var(--white);
+padding: 50px;
+border-radius: 16px;
+box-shadow: var(--shadow-md);
+animation: slideUp 0.6s ease-out;
+position: relative;
+}
+
+/* 篇幅有限，更多代码请参考完整项目文件 */
         </pre>
             <p>通过 VS Code 修改代码并实时在浏览器预览效果。</p>
         </section>
 
         <section id="conversion">
             <h2>将网页转换为 PPT</h2>
-            <p>若必须使用 PPT 格式放映，可按以下步骤操作：</p>
+            <p>通常情况下，网页也可以通过交互设计实现浏览器直接放映，若必须使用 PPT 格式放映，可按以下步骤操作：</p>
             <ul>
                 <li>将制作好的网页导出为 <strong>PDF</strong>。</li>
                 <li>将 PDF 转为 <strong>高清图片</strong>（如 300 dpi 的 PNG）。</li>
                 <li>将图片全屏插入到 Powerpoint 中。</li>
             </ul>
+            <div class="tips">
+                <strong>Tips：</strong>使用 MacOS 系统的 Safari 浏览器打开 HTML 文件可直接导出 PDF，效果最佳。
+            </div>
         </section>
 
         <section id="results">
@@ -343,6 +396,11 @@
             <p><strong>理解 AI，善用 AI：</strong> 将大任务分解为 AI 擅长的小任务（如代码编写、排版设计），使用清晰、目的明确的语言进行沟通。</p>
         </section>
     </div>
+
+    <footer>
+        本网页由 Gemini 3 基于本人手码markdown文档制作<br>
+        &copy; 版权开放，欢迎转载与分享
+    </footer>
 
 </body>
 
